@@ -8,24 +8,31 @@ const wirePath = "~/Repositories/wire/"
 const wireExec = wirePath + "wircmd"
 
 http.createServer(function (req, res) {
-	html = "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'></head><body>"
+	html = "{"
 	buttons = sanitize_buttons (req.url.split("=")[1])
 
 	exec(wireExec + ' -i 192.168.2.91 -c 3 -b "' + buttons + '"', (error, stdout, stderr) => {
 		if (error) {
-			html += `exec error: ${error}`;
+			html += '  "exec_error": "' + removeNewLines (error) + '"'
+			html += '}'
 
-			res.write(html); //write a response to the client
-			res.end(); //end the response
-			return;
+			res.write(html) //write a response to the client
+			res.end() //end the response
+			return
 		}
-		html += `stdout: ${stdout}`;
-		html += `stderr: ${stderr}`;
 
-		res.write(html); //write a response to the client
-		res.end(); //end the response
-	});
-}).listen(8080);
+		html += '  "stdout": "' + removeNewLines (stdout) + '",'
+		html += '  "stderr": "' + removeNewLines (stderr) + '"'
+		html += '}'
+
+		res.write(html) //write a response to the client
+		res.end() //end the response
+	})
+}).listen(8080)
+
+function removeNewLines (str) {
+	return str.replace(new RegExp('\r?\n','g'), '')
+}
 
 function sanitize_buttons (unsanitize_string) {
 	var VALID_CHAR = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890,"
