@@ -22,12 +22,13 @@ http.createServer(function (req, res) {
 		}
 
 		html += '  "stdout": "' + removeNewLines (stdout) + '",'
-		html += '  "stderr": "' + removeNewLines (stderr) + '"'
+		html += '  "stderr": "' + removeNewLines (stderr) + '",'
+		html += '  "buttons": "' + buttons + '"'
 		html += '}'
 
 		res.write(html) //write a response to the client
 		res.end() //end the response
-	})
+	});
 }).listen(8080)
 
 function removeNewLines (str) {
