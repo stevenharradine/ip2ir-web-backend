@@ -9,9 +9,9 @@ const wireExec = wirePath + "wircmd"
 
 http.createServer(function (req, res) {
 	html = "<html><head><meta name='viewport' content='width=device-width, initial-scale=1'></head><body>"
-	sanitized_command = sanitize_buttons (req.url.split("=")[1])
+	buttons = sanitize_buttons (req.url.split("=")[1])
 
-	exec(wireExec + ' -i 192.168.2.91 -c 3 -b "' + sanitized_command + '"', (error, stdout, stderr) => {
+	exec(wireExec + ' -i 192.168.2.91 -c 3 -b "' + buttons + '"', (error, stdout, stderr) => {
 		if (error) {
 			html += `exec error: ${error}`;
 
