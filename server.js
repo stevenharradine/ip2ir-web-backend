@@ -42,8 +42,8 @@ http.createServer(function (req, res) {
 				html += '  "errors": "yes"'	// really used as a hack to keep well formed json wrt commas ,
 				html += '}'
 
-				res.write(html) //write a response to the client
-				res.end() //end the response
+				res.write (html)
+				res.end ()
 				return
 		} else {
 			exec(wireExec + ' -i 192.168.2.91 -c ' + connector + ' -b "' + buttons + '"', (error, stdout, stderr) => {
@@ -51,8 +51,8 @@ http.createServer(function (req, res) {
 					html += '  "exec_error": "' + removeNewLines (error) + '"'
 					html += '}'
 
-					res.write(html) //write a response to the client
-					res.end() //end the response
+					res.write (html)
+					res.end ()
 					return
 				}
 
@@ -61,8 +61,8 @@ http.createServer(function (req, res) {
 				html += '  "buttons": "' + buttons + '"'
 				html += '}'
 
-				res.write(html) //write a response to the client
-				res.end() //end the response
+				res.write (html)
+				res.end ()
 			})
 		}
 	} catch (exception) {
@@ -70,8 +70,8 @@ http.createServer(function (req, res) {
 		html += '  "error": "' + exception + '"'
 		html += '}'
 
-		res.write(html) //write a response to the client
-		res.end() //end the response
+		res.write (html)
+		res.end ()
 	}
 }).listen(8080)
 
